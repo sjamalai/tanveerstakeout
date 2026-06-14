@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tanveer's Take Out — Home-Cooked Pakistani Food</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       DESIGN TOKENS & RESET
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --saffron:     #E8872B;   /* primary brand */
+      --saffron-dk:  #C26A10;   /* hover state */
+      --terracotta:  #C1441C;   /* accent */
+      --gold:        #D4A017;   /* highlight / star */
+      --cream:       #FDF6EC;   /* page background */
+      --cream-dk:    #F5EBD8;   /* card background */
+      --green:       #2D6A4F;   /* coriander green */
+      --dark:        #1C1208;   /* heading text */
+      --mid:         #5A3D1A;   /* body text */
+      --light:       #9C7A50;   /* muted text */
+      --white:       #FFFFFF;
+      --radius-sm:   6px;
+      --radius-md:   12px;
+      --radius-lg:   20px;
+      --shadow-card: 0 4px 24px rgba(28,18,8,0.10);
+      --shadow-nav:  0 2px 16px rgba(28,18,8,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--mid);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--dark);
+      line-height: 1.25;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* =============================================
+       UTILITY CLASSES
+       ============================================= */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--saffron);
+      background: rgba(232,135,43,0.12);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    .section-heading {
+      font-size: clamp(28px, 4vw, 42px);
+      margin-bottom: 14px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--light);
+      max-width: 560px;
+    }
+
+    /* =============================================
+       BUTTONS
+       ============================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: var(--radius-md);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--saffron);
+      color: var(--white);
+      border-color: var(--saffron);
+    }
+    .btn-primary:hover {
+      background: var(--saffron-dk);
+      border-color: var(--saffron-dk);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--saffron);
+      border-color: var(--saffron);
+    }
+    .btn-outline:hover {
+      background: var(--saffron);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--saffron);
+      border-color: var(--white);
+    }
+    .btn-white:hover {
+      background: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    /* =============================================
+       NAV
+       ============================================= */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253,246,236,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,160,23,0.20);
+      box-shadow: var(--shadow-nav);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--dark);
+    }
+    .nav-logo span { color: var(--saffron); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--mid);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--saffron); }
+
+    .nav-cta { margin-left: 16px; }
+
+    /* Hamburger — mobile only */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--dark);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+
+    /* =============================================
+       HERO
+       ============================================= */
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1C1208 0%, #3D2008 60%, #6B3010 100%);
+    }
+
+    /* ── HERO BACKGROUND IMAGE ──────────────────
+       The <img> inside .hero-bg-img is set to
+       object-fit: cover so any of your food
+       photos will fill this area beautifully.
+       Recommended: use the egg-curry pot shot
+       (WhatsApp_Image_2026-06-14_at_18_59_09.jpeg)
+       ─────────────────────────────────────────── */
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(28,18,8,0.85) 0%,
+        rgba(28,18,8,0.55) 55%,
+        rgba(28,18,8,0.10) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 80px 0;
+      max-width: 640px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(212,160,23,0.15);
+      border: 1px solid rgba(212,160,23,0.35);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 68px);
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--saffron);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: rgba(255,255,255,0.80);
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 24px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+    }
+
+    .hero-badge-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(232,135,43,0.20);
+      border: 1px solid rgba(232,135,43,0.40);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+    }
+
+    /* =============================================
+       INTRO STRIP (3 pillars)
+       ============================================= */
+    .strip {
+      background: var(--saffron);
+      padding: 28px 0;
+    }
+
+    .strip-inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      text-align: center;
+    }
+
+    .strip-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .strip-item-icon { font-size: 22px; }
+
+    /* =============================================
+       MENU SECTION
+       ============================================= */
+    .menu-section {
+      padding: 96px 0;
+    }
+
+    .menu-header {
+      margin-bottom: 56px;
+    }
+
+    /* The menu grid: 3 columns on desktop,
+       2 on tablet, 1 on mobile */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    /* ── MENU CARD ────────────────────────────────
+       Each card has:
+       - .card-img-wrap  → the image container (fixed height)
+       - .card-body      → title + description + CTA
+       ─────────────────────────────────────────── */
+    .menu-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(28,18,8,0.16);
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+      background: var(--cream-dk);
+    }
+
+    .card-img-wrap img {
+      transition: transform 0.4s ease;
+    }
+    .menu-card:hover .card-img-wrap img {
+      transform: scale(1.06);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--saffron);
+      color: var(--white);
+      z-index: 2;
+    }
+
+    .card-body {
+      padding: 22px 24px 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--light);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 18px;
+    }
+
+    .card-order-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--saffron);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+    .menu-card:hover .card-order-link { gap: 8px; }
+
+    /* Featured card spans 2 columns on large screens */
+    .menu-card--featured {
+      grid-column: span 2;
+    }
+    .menu-card--featured .card-img-wrap {
+      height: 280px;
+    }
+
+    /* =============================================
+       ABOUT SECTION
+       ============================================= */
+    .about-section {
+      padding: 96px 0;
+      background: var(--cream-dk);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    /* ── ABOUT IMAGE COLLAGE ──────────────────────
+       Replace src values below with two of your
+       best images — e.g. the packed takeout boxes
+       and a cake photo work beautifully here.
+       ─────────────────────────────────────────── */
+    .about-img-wrap {
+      position: relative;
+    }
+
+    .about-img-main {
+      width: 100%;
+      height: 440px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .about-img-accent {
+      position: absolute;
+      bottom: -28px;
+      right: -28px;
+      width: 52%;
+      height: 220px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 5px solid var(--cream-dk);
+      box-shadow: var(--shadow-card);
+    }
+
+    .about-years-badge {
+      position: absolute;
+      top: 24px;
+      left: -20px;
+      background: var(--saffron);
+      color: var(--white);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(232,135,43,0.40);
+    }
+    .about-years-badge strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      line-height: 1;
+    }
+    .about-years-badge span {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .about-content { padding-bottom: 28px; }
+
+    .about-content p {
+      margin-bottom: 16px;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .stat-box {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(28,18,8,0.07);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      color: var(--saffron);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--light);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* =============================================
+       TESTIMONIALS
+       ============================================= */
+    .testimonials-section {
+      padding: 96px 0;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+      border-left: 4px solid var(--saffron);
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-text {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--mid);
+      margin-bottom: 18px;
+      line-height: 1.75;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--dark);
+    }
+
+    /* =============================================
+       ORDER / CTA BANNER
+       ============================================= */
+    .cta-banner {
+      background: linear-gradient(135deg, #C1441C 0%, #E8872B 100%);
+      padding: 72px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(255,255,255,0.04) 0%, transparent 50%);
+    }
+
+    .cta-banner-inner { position: relative; z-index: 1; }
+
+    .cta-banner h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .cta-banner p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 36px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .cta-contact-item {
+      color: rgba(255,255,255,0.80);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cta-contact-item strong {
+      color: var(--white);
+    }
+
+    /* =============================================
+       FOOTER
+       ============================================= */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.65);
+      padding: 60px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .footer-brand .nav-logo { color: var(--white); margin-bottom: 14px; }
+
+    .footer-brand p {
+      font-size: 14px;
+      line-height: 1.75;
+      max-width: 260px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.20);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.65);
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    .social-btn:hover {
+      background: var(--saffron);
+      border-color: var(--saffron);
+      color: var(--white);
+    }
+
+    .footer-col h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.40);
+      margin-bottom: 18px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col ul li {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .footer-col ul a:hover { color: var(--saffron); }
+
+    .footer-hours li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .footer-hours .day { color: rgba(255,255,255,0.45); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .footer-tagline {
+      color: var(--saffron);
+      font-weight: 500;
+      font-style: italic;
+    }
+
+    /* =============================================
+       RESPONSIVE BREAKPOINTS
+       ============================================= */
+    @media (max-width: 900px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .menu-card--featured {
+        grid-column: span 2;
+      }
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .about-img-accent {
+        right: -12px;
+        bottom: -16px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+      .footer-brand { grid-column: span 2; }
+    }
+
+    @media (max-width: 640px) {
+      /* Nav goes mobile */
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        background: var(--cream);
+        flex-direction: column;
+        padding: 20px 24px 28px;
+        border-bottom: 1px solid rgba(212,160,23,0.20);
+        box-shadow: var(--shadow-nav);
+        gap: 18px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+      .nav-cta { display: none; }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+      .menu-card--featured {
+        grid-column: span 1;
+      }
+      .menu-card--featured .card-img-wrap {
+        height: 220px;
+      }
+
+      .hero-badges { gap: 14px; }
+
+      .about-stats { grid-template-columns: 1fr 1fr; }
+
+      .cta-contact-row { flex-direction: column; align-items: center; gap: 14px; }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-brand { grid-column: span 1; }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAVIGATION
+       ============================================= -->
+  <nav>
+    <div class="container nav-inner">
+
+      <!-- ── LOGO: Edit text if desired ── -->
+      <a href="#home" class="nav-logo">Tanveer's <span>Take Out</span></a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Our Menu</a></li>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="nav-cta">
+          <!-- ── ORDER NOW CTA: Link to WhatsApp or ordering system ── -->
+          <a href="tel:+923001234567" class="btn btn-primary">Order Now ↗</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- =============================================
+       HERO SECTION
+       id="home" — scroll target for nav
+       ============================================= -->
+  <section class="hero" id="home">
+
+    <!-- ── HERO BACKGROUND IMAGE ──────────────────
+         Replace the src below with your best
+         hero shot. The rich egg curry pot image
+         works beautifully here.
+         Filename: WhatsApp_Image_2026-06-14_at_18_59_09.jpeg
+         ─────────────────────────────────────────── -->
+    <div class="hero-bg-img">
+      <img
+        src="WhatsApp_Image_2026-06-14_at_18_59_09.jpeg"
+        alt="Ammi's signature egg curry bubbling in the pot"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content">
+      <div class="hero-tag">★ Family Recipes. Zero Compromises.</div>
+
+      <!-- ── HERO HEADLINE: Edit to taste ── -->
+      <h1>
+        Ammi's Kitchen<br/>
+        On Your <em>Doorstep.</em>
+      </h1>
+
+      <!-- ── HERO SUBHEADLINE ── -->
+      <p class="hero-sub">
+        Generous portions. Authentic spices. The kind of home-cooked Pakistani
+        food that makes your whole street jealous.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-primary">View Menu &amp; Order</a>
+        <a href="#about" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.5);">Our Story</a>
+      </div>
+
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <div class="hero-badge-icon">🍛</div>
+          <span>Authentic Desi Flavours</span>
+        </div>
+        <div class="hero-badge">
+          <div class="hero-badge-icon">📦</div>
+          <span>Generous Takeout Portions</span>
+        </div>
+        <div class="hero-badge">
+          <div class="hero-badge-icon">🎂</div>
+          <span>Custom Cakes &amp; Bakes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       INTRO STRIP — 3 USPs
+       ============================================= -->
+  <div class="strip">
+    <div class="container strip-inner">
+      <div class="strip-item">
+        <span class="strip-item-icon">🌶️</span>
+        Hand-Ground Spice Blends
+      </div>
+      <div class="strip-item">
+        <span class="strip-item-icon">❤️</span>
+        Made Fresh Daily
+      </div>
+      <div class="strip-item">
+        <span class="strip-item-icon">🥘</span>
+        100% Homestyle Recipes
+      </div>
+      <div class="strip-item">
+        <span class="strip-item-icon">📞</span>
+        <!-- ── PHONE: Replace with real number ── -->
+        Call: 0300-1234567
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =============================================
+       MENU SECTION
+       id="menu" — scroll target for nav
+       ─────────────────────────────────────────────
+       HOW TO UPDATE THIS SECTION:
+       Each .menu-card has:
+         1. A <img src="..."> inside .card-img-wrap
+            → Replace the src with your actual filename
+         2. A .card-badge → short category label
+         3. A .card-title → dish name
+         4. A .card-desc  → mouthwatering description
+       ============================================= -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <div class="menu-header">
+        <div class="section-tag">What We Cook</div>
+        <h2 class="section-heading">The Menu</h2>
+        <p class="section-sub">
+          From hearty curries to celebration cakes — everything made from scratch
+          with the same love Ammi puts into every single meal.
+        </p>
+      </div>
+
+      <div class="menu-grid">
+
+        <!-- ── CARD 1: FEATURED ─────────────────────
+             Spans 2 columns on desktop.
+             Image: egg curry close-up (your best shot)
+             ─────────────────────────────────────────── -->
+        <div class="menu-card menu-card--featured">
+          <div class="card-img-wrap">
+            <div class="card-badge">Signature Dish</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_09.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_09.jpeg"
+              alt="Ammi's Ande Aloo Curry — eggs and potatoes in a rich tomato gravy"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Ande Aloo Curry</h3>
+            <p class="card-desc">
+              The one that started it all. Soft boiled eggs and chunky potatoes
+              slow-simmered in a deep, aromatic tomato-based gravy with whole spices
+              and hand-pounded masala. Best eaten with roti or over a hill of rice.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order This Dish →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 2: TAKEOUT BOXES ─────────────────
+             Image: packaged takeout boxes with "Takeout" sticker
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Takeout Ready</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_09__1_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_09__1_.jpeg"
+              alt="Tanveer's Take Out branded meal boxes ready for collection"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Full Meal Boxes</h3>
+            <p class="card-desc">
+              A complete desi meal, packed with care. Curry + rice + fresh salad,
+              sealed and labelled — ready for you to grab and feast.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order a Box →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 3: BIRYANI / ZEERA RICE ──────────
+             Image: biryani rice with fried onions and bay leaf
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Rice Dishes</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_25.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_25.jpeg"
+              alt="Fragrant zeera rice topped with crispy fried onions"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Zeera Rice &amp; Biryani</h3>
+            <p class="card-desc">
+              Long-grain basmati cooked with whole spices, topped with golden-brown
+              fried onions. A bed of clouds for any curry.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order Rice →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 4: PLATED TAKEOUT ─────────────────
+             Image: curry boxes with fresh salad pots
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Meal Deal</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_25__1_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_25__1_.jpeg"
+              alt="Full takeout spread: curry boxes, salad bowls, and rice"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">The Full Spread</h3>
+            <p class="card-desc">
+              Curry + rice + a crisp salad with cucumber, lettuce, and tomato.
+              Everything you need. Nothing you don't.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order the Deal →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 5: VANILLA / LEMON CAKE ──────────
+             Image: white cream cake with yellow glaze
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Custom Cakes</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_25__2_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_25__2_.jpeg"
+              alt="Lemon cream celebration cake with piped cream rosettes"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Lemon Cream Cake</h3>
+            <p class="card-desc">
+              Moist sponge, silky cream frosting, and a glossy lemon drizzle centre.
+              Birthdays, Eids, or just because — order yours in advance.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order a Cake →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 6: CHOCOLATE CAKE ────────────────
+             Image: heavily decorated chocolate frosting cake
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Custom Cakes</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_25__3_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_25__3_.jpeg"
+              alt="Rich chocolate buttercream cake with chocolate chip decorations"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Chocolate Dream Cake</h3>
+            <p class="card-desc">
+              Deep chocolate sponge draped in velvety chocolate buttercream and
+              piped into elaborate swirls. The one people fight over at parties.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order a Cake →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 7: DRIP CAKE ──────────────────────
+             Image: red drip cake with gold pearl decorations
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Custom Cakes</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_25__4_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_25__4_.jpeg"
+              alt="Red drip cake with gold pearl decorations on white frosting"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Signature Drip Cake</h3>
+            <p class="card-desc">
+              White cream canvas, dramatic red drip, and scattered gold pearls.
+              Statement piece for any celebration — fully customisable.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order a Cake →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 8: BUTTERFLY CHOCOLATE CAKE ──────
+             Image: dark ganache cake with pink cream and butterflies
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Custom Cakes</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_26.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_26.jpeg"
+              alt="Dark ganache cake with blush pink cream piping and butterfly toppers"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Garden Party Cake</h3>
+            <p class="card-desc">
+              Dark chocolate ganache base crowned with blush-pink cream florals,
+              gold pearl accents, and delicate butterfly toppers. Pure elegance.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order a Cake →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 9: INDEPENDENCE DAY CAKE ─────────
+             Image: green Pakistan themed cake "Zindabad"
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Seasonal Special</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_26__1_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_26__1_.jpeg"
+              alt="Pakistan Independence Day cake in green and white with Zindabad lettering"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Themed Celebration Cakes</h3>
+            <p class="card-desc">
+              From Independence Day to weddings — any occasion, any colour scheme.
+              Custom lettering, fondant work, and patriotic pride included.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Request a Design →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 10: DONUTS ──────────────────────
+             Image: assorted homemade donuts with chocolate and sprinkles
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Baked Treats</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_26__2_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_26__2_.jpeg"
+              alt="Assorted homemade donuts glazed in chocolate with rainbow sprinkles"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Homemade Donuts</h3>
+            <p class="card-desc">
+              Soft, pillowy rings glazed in chocolate and scattered with rainbow
+              sprinkles. Order by the dozen for your next gathering.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order Donuts →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 11: BUNDT + LOAF CAKE ────────────
+             Image: bundt cake and loaf bread
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Baked Treats</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_26__3_.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_26__3_.jpeg"
+              alt="Chocolate bundt cake and date-and-nut loaf cake"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Bundt Cakes &amp; Loaves</h3>
+            <p class="card-desc">
+              Beautifully baked bundt cakes and rustic loaves — perfect with chai.
+              Moist, dense, and packed with nuts and dried fruit.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Order Bakes →</a>
+          </div>
+        </div>
+
+        <!-- ── CARD 12: MORE TAKEOUT BOXES ───────────
+             Image: second angle of takeout boxes with zeera rice
+             ─────────────────────────────────────────── -->
+        <div class="menu-card">
+          <div class="card-img-wrap">
+            <div class="card-badge">Catering</div>
+            <!-- IMAGE: WhatsApp_Image_2026-06-14_at_18_59_27.jpeg -->
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_27.jpeg"
+              alt="Multiple takeout meal boxes for catering orders"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Catering &amp; Bulk Orders</h3>
+            <p class="card-desc">
+              Feeding a dawat? We do bulk orders for gatherings, offices, and
+              events. Call ahead and let us take care of the spread.
+            </p>
+            <a href="tel:+923001234567" class="card-order-link">Enquire Now →</a>
+          </div>
+        </div>
+
+      </div><!-- /menu-grid -->
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       ABOUT / MOM'S STORY SECTION
+       id="about" — scroll target for nav
+       ============================================= -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-inner">
+
+        <!-- Image collage -->
+        <div class="about-img-wrap">
+
+          <div class="about-years-badge">
+            <strong>10+</strong>
+            <span>Years<br/>of Love</span>
+          </div>
+
+          <!-- ── ABOUT MAIN IMAGE ─────────────────────
+               Swap with your most atmospheric photo.
+               The full takeout spread (curry + salad + rice)
+               works brilliantly here.
+               Filename: WhatsApp_Image_2026-06-14_at_18_59_27__1_.jpeg
+               ─────────────────────────────────────────── -->
+          <div class="about-img-main">
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_27__1_.jpeg"
+              alt="Tanveer's take out — curry, rice and salad laid out for delivery"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- ── ABOUT ACCENT IMAGE ──────────────────
+               A cake photo works great here as contrast.
+               Filename: WhatsApp_Image_2026-06-14_at_18_59_27__2_.jpeg
+               ─────────────────────────────────────────── -->
+          <div class="about-img-accent">
+            <img
+              src="WhatsApp_Image_2026-06-14_at_18_59_27__2_.jpeg"
+              alt="One of Ammi's custom celebration cakes"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Story text -->
+        <div class="about-content">
+          <div class="section-tag">Our Story</div>
+          <h2 class="section-heading">Made with Ammi's Hands</h2>
+
+          <!-- ── ABOUT TEXT: Edit freely ── -->
+          <p>
+            Tanveer's Take Out started the way all great things do — someone
+            kept saying <em>"you should sell this"</em>, and eventually Ammi
+            listened. What began as feeding the family grew into feeding the
+            neighbourhood, and then, anyone who could find the number.
+          </p>
+          <p>
+            Every recipe has lived in this family for decades. The spice ratios
+            are memorised, not measured. The curry is never rushed. The cakes
+            are built with the same focus most people reserve for engineering.
+          </p>
+          <p>
+            No shortcuts. No compromise on portions. Just the real thing —
+            cooked fresh, packed with care, and delivered with love.
+          </p>
+
+          <div class="about-stats">
+            <!-- ── STATS: Update numbers as appropriate ── -->
+            <div class="stat-box">
+              <span class="stat-number">500+</span>
+              <span class="stat-label">Happy Customers</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">20+</span>
+              <span class="stat-label">Menu Items</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Homemade</span>
+            </div>
+          </div>
+
+          <a href="tel:+923001234567" class="btn btn-primary">Place an Order</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       TESTIMONIALS
+       ============================================= -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 8px;">
+        <div class="section-tag">Word on the Street</div>
+        <h2 class="section-heading">What People Are Saying</h2>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <!-- ── TESTIMONIALS: Replace with real quotes ── -->
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">
+            "The ande aloo curry reminds me of my own grandmother's kitchen.
+            I ordered for a dinner party and people are still asking where it
+            came from."
+          </p>
+          <p class="testimonial-author">— Sana R., Regular Customer</p>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">
+            "The portions are HUGE. I ordered one box expecting a single meal
+            and it fed three of us. Absolutely worth every rupee."
+          </p>
+          <p class="testimonial-author">— Ahmed K., Office Order</p>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">
+            "The custom birthday cake was stunning. Dark chocolate with the
+            pink butterflies — everyone thought I ordered from a professional
+            bakery. She is the professional bakery."
+          </p>
+          <p class="testimonial-author">— Fatima M., Birthday Order</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       CTA / ORDER BANNER
+       id="contact" — scroll target for nav
+       ============================================= -->
+  <section class="cta-banner" id="contact">
+    <div class="container cta-banner-inner">
+      <h2>Ready to Order?<br/>Ammi's Waiting.</h2>
+      <p>
+        Call or WhatsApp to place your order. Give us a heads-up for large
+        catering orders and custom cakes.
+      </p>
+
+      <!-- ── CTA BUTTONS: Update href with real contact links ── -->
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="tel:+923001234567" class="btn btn-white">📞 Call to Order</a>
+        <a href="https://wa.me/923001234567" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.6);">💬 WhatsApp Us</a>
+      </div>
+
+      <div class="cta-contact-row">
+        <!-- ── CONTACT DETAILS: Replace with real info ── -->
+        <div class="cta-contact-item">
+          📍 <strong>Location:</strong> [Your City / Area, Pakistan]
+        </div>
+        <div class="cta-contact-item">
+          🕐 <strong>Hours:</strong> Daily 11am – 10pm
+        </div>
+        <div class="cta-contact-item">
+          📱 <strong>Instagram:</strong> @tanveerstakeout
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       FOOTER
+       ============================================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand column -->
+        <div class="footer-brand">
+          <div class="nav-logo">Tanveer's <span>Take Out</span></div>
+          <p>
+            Home-cooked Pakistani food and custom bakes — made fresh daily with
+            decades of family recipes and an embarrassing amount of love.
+          </p>
+          <div class="footer-social">
+            <!-- ── SOCIAL: Replace hrefs with real profile links ── -->
+            <a href="https://www.facebook.com/tanveerstakeout" class="social-btn" aria-label="Facebook">f</a>
+            <a href="https://www.instagram.com/tanveerstakeout" class="social-btn" aria-label="Instagram">in</a>
+            <a href="https://wa.me/923001234567" class="social-btn" aria-label="WhatsApp">W</a>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Our Menu</a></li>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Menu categories -->
+        <div class="footer-col">
+          <h4>We Make</h4>
+          <ul>
+            <li>Pakistani Curries</li>
+            <li>Zeera Rice &amp; Biryani</li>
+            <li>Full Meal Boxes</li>
+            <li>Custom Cakes</li>
+            <li>Donuts &amp; Bakes</li>
+            <li>Catering Orders</li>
+          </ul>
+        </div>
+
+        <!-- Opening hours -->
+        <div class="footer-col">
+          <h4>Opening Hours</h4>
+          <!-- ── HOURS: Update as needed ── -->
+          <ul class="footer-hours">
+            <li><span class="day">Mon–Fri</span> <span>11am – 10pm</span></li>
+            <li><span class="day">Saturday</span> <span>10am – 11pm</span></li>
+            <li><span class="day">Sunday</span>  <span>12pm – 9pm</span></li>
+          </ul>
+        </div>
+
+      </div><!-- /footer-grid -->
+
+      <div class="footer-bottom">
+        <p>© 2026 Tanveer's Take Out. All rights reserved.</p>
+        <p class="footer-tagline">
+          Resistance is futile — come get your feast. 🌶️
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- =============================================
+       JAVASCRIPT — Mobile nav toggle only
+       ============================================= -->
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+
+    toggle.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close nav when a link is clicked on mobile
+    links.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', false);
+      });
+    });
+  </script>
+
+</body>
+</html>
